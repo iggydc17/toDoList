@@ -1,6 +1,4 @@
-1 update textarea counter
-2 select all
-3 filter select
 4 edit button
 5 alerts
 6 time
+7 Responsive

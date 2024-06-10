@@ -23,6 +23,9 @@ class ToDoList {
         this.totalSearchContainer = document.getElementById("total-search-results");
         this.totalSearchResultNumber = document.getElementById("total-search-result-number");
         this.taskListResultsContainer = document.getElementById("task-list-results-container");
+        this.statusOrder = ["Done", "In Progress", "Not Done"];
+        this.importanceOrder = ["High", "Medium", "Low"];
+        this.deleteSelectedTasks();
         this.textareaCharacterCountdown();
 
         this.taskList = JSON.parse(localStorage.getItem('taskList')) || [];
@@ -115,7 +118,6 @@ class ToDoList {
                 alert(`${task.name} has been deleted.`);
             });
         });
-        this.updateSearchResultCount(taskArray.length);
     }
     
     createTask() {
@@ -240,8 +242,6 @@ class ToDoList {
                 task.status.toLowerCase().includes(searchBar)
             );
     
-            this.updateSearchResultCount(searchResult.length);
-
             if (searchResult.length > 0) {
                 this.displayTasksOrSearchResults(searchResult);
                 if (!backButton) {
@@ -305,11 +305,7 @@ class ToDoList {
                 break;
         }
         return taskArray;
-    }
-    
-    // Definir el orden de importancia y estado
-    statusOrder = ["Done", "In Progress", "Not Done"];
-    importanceOrder = ["High", "Medium", "Low"];
+    }    
     
     convertSortedByButtonTextContent() {
         this.dropdownItems = document.querySelectorAll('#dropdown-menu .dropdown-item');
@@ -327,15 +323,6 @@ class ToDoList {
         });
     }
 
-    updateSearchResultCount(count) {
-        if (count > 0) {
-            this.totalSearchResultNumber.textContent = `Search Results: ${count}`;
-            this.totalSearchResultNumber.style.display = "block";
-        } else {
-            this.totalSearchResultNumber.style.display = "none";
-        }
-    }
-
     displayNotFoundMessage() {
         this.taskListResultsContainer.innerHTML = "";
     
@@ -344,22 +331,129 @@ class ToDoList {
         notFoundMessage.innerHTML = `
             <div id="not-found-message">
                 <h2 id="not-found-message-h4">We couldn't find any results</h2>
+                <p id="show-tasks-again">Show Tasks!</p>
             </div> 
         `;
         
         this.taskListResultsContainer.innerHTML = "";
         this.taskListResultsContainer.appendChild(notFoundMessage);
+        this.sortedByButton.style.display = "none";
+        this.taskCounter.style.display = "none";
+
+        const showTasksAgain = document.getElementById("show-tasks-again");
+
+        showTasksAgain.addEventListener("click", () => {
+            this.displayTasksOrSearchResults(this.taskList);
+            this.sortedByButton.style.display = "block";
+            this.taskCounter.style.display = "block";
+            this.totalSearchResultNumber.style.display = "none";
+            this.searchFormContainer.reset();
+        });
     }
 
     // Task Manipulation
     selectAllTasks() {
         const generalCheckbox = document.getElementById("general-checkbox");
-        const taskCheckbox = document.getElementById ("task-checkbox");
+        const allButton = document.getElementById("all-button");
+        const noneButton = document.getElementById("none-button");
+        const doneButton = document.getElementById("done-button");
+        const inProgressButton = document.getElementById("in-progress-button");
+        const notDoneButton = document.getElementById("not-done-button");
+        const highImportanceButton = document.getElementById("hight-importance-button");
+        const mediumImportanceButton = document.getElementById("medium-importance-button");
+        const lowImportanceButton = document.getElementById("low-importance-button");
+    
+        generalCheckbox.addEventListener("click", () => {
+            const tasks = document.querySelectorAll(".task-checkbox");
+            tasks.forEach(task => {
+                task.checked = generalCheckbox.checked;
+            });
+        });
 
-        generalCheckbox.addEventListener("change", () => {
-            // Finish
-        })
+        allButton.addEventListener("click", () => {
+            const tasks = document.querySelectorAll(".task-checkbox");
+            tasks.forEach(task => {
+                task.checked = true;
+            });
+        });
+    
+        noneButton.addEventListener("click", () => {
+            const tasks = document.querySelectorAll(".task-checkbox");
+            tasks.forEach(task => {
+                task.checked = false;
+            });
+        });
+    
+        doneButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("Done");
+        });
+    
+        inProgressButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("In Progress");
+        });
+    
+        notDoneButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("Not Done");
+        });
+    
+        highImportanceButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("High");
+        });
+    
+        mediumImportanceButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("Medium");
+        });
+    
+        lowImportanceButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("Low");
+        });
     }
+    
+    filterAndSelectTasks(status) {
+        const tasks = document.querySelectorAll(".task-checkbox");
+        tasks.forEach(task => {
+            if (task.dataset.status === status) {
+                task.checked = true;
+            } else {
+                task.checked = false;
+            }
+        });
+    }
+    
+    deleteSelectedTasks() {
+        const trashIcon = document.getElementById("trash-icon");
+    
+        trashIcon.addEventListener("click", () => {
+            const selectedTasks = document.querySelectorAll(".task-checkbox:checked");
+            if (selectedTasks.length > 0) {
+                const confirmation = confirm("Are you sure you want to delete the selected tasks?");
+                if (confirmation) {
+                    selectedTasks.forEach(selectedTask => {
+                        const parentTaskDiv = selectedTask.closest(".p-task");
+                        const taskId = parentTaskDiv.id;
+                        const index = taskId.split("-")[1];
+                        this.deleteTask(index);
+                    });
+                }
+            } else {
+                alert("No tasks selected for deletion.");
+            }
+        });
+    }  
+    
+    filterAndSelectTasks(filterValue) {
+        const tasks = document.querySelectorAll(".task-checkbox");
+        tasks.forEach(task => {
+            const parentTaskDiv = task.closest(".p-task");
+            const taskStatus = parentTaskDiv.querySelector(".task").textContent;
+            if (taskStatus.includes(filterValue)) {
+                task.checked = true;
+            } else {
+                task.checked = false;
+            }
+        });
+    }
+    
 
     reloadWeb() {
         const refreshIcon = document.getElementById("refresh-icon");
@@ -428,6 +522,7 @@ toDoList.convertSortedByButtonTextContent();
 toDoList.textareaCharacterCountdown();
 toDoList.resetTaskForm();
 toDoList.reloadWeb();
+toDoList.selectAllTasks();
 
 
 
