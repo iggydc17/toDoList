@@ -1,4 +1,2 @@
 4 edit button
-5 alerts
-6 time
 7 Responsive

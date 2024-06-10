@@ -1,3 +1,46 @@
+// To Do List Program
+
+// Get Local Time
+function getOrdinalSuffix(number) {
+    if (number >= 11 && number <= 13) {
+        return 'th';
+    }
+    switch (number % 10) {
+        case 1:
+            return 'st';
+        case 2:
+            return 'nd';
+        case 3:
+            return 'rd';
+        default:
+            return 'th';
+    }
+}
+
+function updateLocalTime() {
+    const localTimeElement = document.getElementById('time');
+    const now = new Date();
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const dayOfMonth = now.getDate();
+    const dayOfMonthSuffix = getOrdinalSuffix(dayOfMonth);
+    const month = months[now.getMonth()].slice(0, 3);
+    const year = now.getFullYear();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    
+    const timeString = `${dayOfMonth}${dayOfMonthSuffix} ${month}, ${year} - ${hours}:${minutes}:${seconds}`;
+    
+    localTimeElement.textContent = timeString;
+    localTimeElement.style.fontWeight = "bold";
+}
+
+setInterval(updateLocalTime, 1000);
+updateLocalTime();
+
+
 // Classes
 class Task {
     constructor(name, importance, status, date, finishDate, description = '') {
@@ -115,7 +158,14 @@ class ToDoList {
             deleteButton.addEventListener("click", (event) => {
                 const taskIndex = event.target.classList[0];
                 this.deleteTask(taskIndex);
-                alert(`${task.name} has been deleted.`);
+                Toastify({
+                    text: `${task.name.charAt(0).toUpperCase() + task.name.slice(1)} has been deleted from the tasks list`,
+                    className: "info",
+                    style: {
+                        background: "tomato",
+                        borderRadius: "4px"
+                    }
+                }).showToast();
             });
         });
     }
@@ -136,10 +186,24 @@ class ToDoList {
                 
                 this.addTask(newTask);
                 this.completeTaskForm.reset();
-                alert(`The "${addTaskInput}" task has been added successfully!`);
+                Toastify({
+                    text: `${addTaskInput.charAt(0).toUpperCase() + addTaskInput.slice(1)} has been added successfully to the tasks list!`,
+                    className: "info",
+                    style: {
+                        background: "#0FC616",
+                        borderRadius: "4px"
+                    }
+                }).showToast();
             } 
             else {
-                alert("The form must be filled!");
+                Toastify({
+                    text: "The form must be filled!",
+                    className: "info",
+                    style: {
+                        background: "tomato",
+                        borderRadius: "4px"
+                    }
+                }).showToast();
             }
         });
     }
@@ -198,13 +262,44 @@ class ToDoList {
     }
 
     clearTasks() {
+        
         this.clearAllButton.addEventListener("click", () => {
-            alert(`${this.taskList.length} tasks have been removed, the list is empty.`)
+
+            if (this.taskList.length >= 1) {
+                Swal.fire({
+                    title: "Are you sure you want to delete all the tasks?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#0FC616",
+                    cancelButtonColor: "tomato",
+                    confirmButtonText: "Yes, delete all"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                        title: "Deleted!",
+                        text: "All the tasks have been deleted.",
+                        icon: "success"
+                        });
+                    }
+                });
+            }
+            else {
+                Toastify({
+                    text: "The task list it's empty!",
+                    className: "info",
+                    style: {
+                        background: "tomato",
+                        borderRadius: "4px"
+                    }
+                }).showToast();    
+            }
+
             this.taskList = [];
             localStorage.setItem('taskList', JSON.stringify(this.taskList));
             this.displayTasksHandler();
             this.taskCounterMethod();
-        })
+        });
     }
 
     resetTaskForm() {
@@ -226,12 +321,27 @@ class ToDoList {
             const searchBar = document.getElementById("search-bar").value.trim().toLowerCase();
 
             if (searchBar === "") {
-                alert("Fill the search form!");
+                Toastify({
+                    text: "Fill the search form!",
+                    className: "info",
+                    style: {
+                        background: "tomato",
+                        borderRadius: "4px"
+                    }
+                }).showToast();
+
                 return;
             }
     
             if (this.taskList.length === 0) {
-                alert("The task list it's empty.");
+                Toastify({
+                    text: "The task list it's empty.",
+                    className: "info",
+                    style: {
+                        background: "tomato",
+                        borderRadius: "4px"
+                    }
+                }).showToast();
                 this.searchFormContainer.reset();
                 return;
             }
@@ -436,7 +546,14 @@ class ToDoList {
                     });
                 }
             } else {
-                alert("No tasks selected for deletion.");
+                Toastify({
+                    text: "No tasks selected for deletion.",
+                    className: "info",
+                    style: {
+                        background: "tomato",
+                        borderRadius: "4px"
+                    }
+                }).showToast();
             }
         });
     }  
@@ -508,6 +625,18 @@ class ToDoList {
     
         taskDescriptionTextarea.addEventListener("input", updateCounter);
     };
+
+    toastifyNotifications = (message, backgroundColor) => {
+        Toastify({
+            text: message,
+            className: "info",
+            style: {
+                background: backgroundColor,
+                borderRadius: "4px"
+            }
+        }).showToast();
+    }
+    
 }
 
 // Instances
@@ -527,5 +656,5 @@ toDoList.selectAllTasks();
 
 
 
-// Add Luxon, Toastify and SweetAlert Js Libraries!!!
+// Add Toastify and SweetAlert Js Libraries!!!
 // Include SendGrid for mails.
