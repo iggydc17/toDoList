@@ -438,6 +438,11 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 }
 
+.dropdown-menu {
+    max-height: 240px;
+    overflow-y: auto;
+}
+
 .bi-arrow-clockwise {
     margin-right: 18px;
     margin-left: 18px;
@@ -488,6 +493,11 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .bi-x-circle {
     margin-right: 8px;
+}
+
+.finish-date-span {
+    line-height: 32px;
+    margin-left: 64px;
 }
 
 /*Empty Task Message*/

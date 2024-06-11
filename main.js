@@ -64,7 +64,7 @@ class ToDoList {
         this.sortedByButton = document.getElementById("sorted-by-button");
         this.totalSearchContainer = document.getElementById("total-search-results");
         this.taskListResultsContainer = document.getElementById("task-list-results-container");
-        this.statusOrder = ["Done", "In Progress", "Not Done"];
+        this.statusOrder = ["Done", "In Progress", "Unfinished"];
         this.importanceOrder = ["High", "Medium", "Low"];
         this.deleteSelectedTasks();
         this.textareaCharacterCountdown();
@@ -75,7 +75,7 @@ class ToDoList {
     createTaskElement(task, index) {
         let tasksDiv = document.createElement("div");
         let capitalizedTaskName = task.name.charAt(0).toUpperCase() + task.name.slice(1);
-        let importanceColor = task.importance === "High" ? "red" : task.importance === "Medium" ? "darkOrange" : "rgb(255, 238, 0)";
+        let importanceColor = task.importance === "High" ? "red" : task.importance === "Medium" ? "darkOrange" : "#FFBF00";
         let statusColor = task.status === "Done" ? "green" : task.status === "In Progress" ? "darkOrange" : "red";
         let finishDate = new Date(task.finishDate);
         let formattedFinishDate = this.formatDate(finishDate);
@@ -101,9 +101,9 @@ class ToDoList {
                 <div class="task-info">
                     <p class="task" title="${capitalizedTaskName}">
                         <input type="checkbox" class="task-checkbox" title="Select task"></input>
-                        ${index + 1}) ${capitalizedTaskName} | ${formattedDate} | 
+                        ${index + 1}) &nbsp ${capitalizedTaskName} | ${formattedDate} | 
                         <span style="color: ${importanceColor};">${task.importance}</span> | 
-                        <span style="color: ${statusColor};">${task.status}</span> | Finish Date: ${formattedFinishDate} 
+                        <span style="color: ${statusColor};">${task.status}</span> | <br><span class="finish-date-span">Finish Date: ${formattedFinishDate}.</span> 
                         &nbsp ${deadlineIcon}
                     </p>
                     <div class="description-container">${descriptionButton}</div>
@@ -134,9 +134,8 @@ class ToDoList {
         });
 
 
-        deleteButton.addEventListener("click", (event) => {
-            const taskIndex = event.target.classList[0];
-            this.deleteTask(taskIndex);
+        deleteButton.addEventListener("click", () => {
+            this.deleteTask(index);
             Toastify({
                 text: `${task.name.charAt(0).toUpperCase() + task.name.slice(1)} has been deleted from the tasks list`,
                 className: "info",
@@ -177,7 +176,7 @@ class ToDoList {
                     <select id="edit-task-status" required>
                         <option value="Done" ${task.status === "Done" ? "selected" : ""}>Done</option>
                         <option value="In Progress" ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
-                        <option value="Not Done" ${task.status === "Not Done" ? "selected" : ""}>Not Done</option>
+                        <option value="Unfinished" ${task.status === "Unfinished" ? "selected" : ""}>Unfinished</option>
                     </select>
                     <label for="edit-task-finish-date">Finish Date:</label>
                     <input type="date" id="edit-task-finish-date" value="${task.finishDate.split('T')[0]}" required>
@@ -497,6 +496,20 @@ class ToDoList {
             case "Z - A":
                 taskArray.sort((a, b) => b.name.localeCompare(a.name));
                 break;
+            case "Active":
+                taskArray = taskArray.filter(task => {
+                    const currentDate = new Date();
+                    const finishDateTime = new Date(task.finishDate);
+                    return currentDate <= finishDateTime;
+                });
+                break;
+            case "Expired":
+                taskArray = taskArray.filter(task => {
+                    const currentDate = new Date();
+                    const finishDateTime = new Date(task.finishDate);
+                    return currentDate > finishDateTime;
+                });
+                break;
             case "Status ↑ ↓":
                 taskArray.sort((a, b) => this.statusOrder.indexOf(a.status) - this.statusOrder.indexOf(b.status));
                 break;
@@ -576,9 +589,11 @@ class ToDoList {
         const generalCheckbox = document.getElementById("general-checkbox");
         const allButton = document.getElementById("all-button");
         const noneButton = document.getElementById("none-button");
+        const activeButton = document.getElementById("active-button"); 
+        const expiredButton = document.getElementById("expired-button");
         const doneButton = document.getElementById("done-button");
         const inProgressButton = document.getElementById("in-progress-button");
-        const notDoneButton = document.getElementById("not-done-button");
+        const unfinishedButton = document.getElementById("unfinished-button");
         const highImportanceButton = document.getElementById("hight-importance-button");
         const mediumImportanceButton = document.getElementById("medium-importance-button");
         const lowImportanceButton = document.getElementById("low-importance-button");
@@ -603,7 +618,33 @@ class ToDoList {
                 task.checked = false;
             });
         });
-    
+
+        activeButton.addEventListener("click", () => {
+            const tasks = document.querySelectorAll(".task-checkbox");
+            tasks.forEach(task => {
+                const parentTaskDiv = task.closest(".p-task");
+                const isOverdue = parentTaskDiv.querySelector(".bi-hourglass-bottom") !== null;
+                if (isOverdue) {
+                    task.checked = false;
+                } else {
+                    task.checked = true;
+                }
+            });
+        });
+                            
+        expiredButton.addEventListener("click", () => {
+            const tasks = document.querySelectorAll(".task-checkbox");
+            tasks.forEach(task => {
+                const parentTaskDiv = task.closest(".p-task");
+                const isOverdue = parentTaskDiv.querySelector(".bi-hourglass-bottom") !== null;
+                if (isOverdue) {
+                    task.checked = true;
+                } else {
+                    task.checked = false;
+                }
+            });
+        });
+
         doneButton.addEventListener("click", () => {
             this.filterAndSelectTasks("Done");
         });
@@ -612,8 +653,8 @@ class ToDoList {
             this.filterAndSelectTasks("In Progress");
         });
     
-        notDoneButton.addEventListener("click", () => {
-            this.filterAndSelectTasks("Not Done");
+        unfinishedButton.addEventListener("click", () => {
+            this.filterAndSelectTasks("Unfinished");
         });
     
         highImportanceButton.addEventListener("click", () => {
@@ -629,16 +670,31 @@ class ToDoList {
         });
     }
     
-    filterAndSelectTasks(status) {
+    filterAndSelectTasks(filterValue) {
         const tasks = document.querySelectorAll(".task-checkbox");
+        const filteredTasks = [];
         tasks.forEach(task => {
-            if (task.dataset.status === status) {
+            const parentTaskDiv = task.closest(".p-task");
+            const taskStatus = parentTaskDiv.querySelector(".task").textContent;
+            if (taskStatus.includes(filterValue)) {
                 task.checked = true;
+                filteredTasks.push(task);
             } else {
                 task.checked = false;
             }
         });
-    }
+        
+        if (filteredTasks.length === 0) {
+            Toastify({
+                text: `No tasks were found with the status "${filterValue}".`,
+                className: "info",
+                style: {
+                    background: "tomato",
+                    borderRadius: "4px"
+                }
+            }).showToast();
+        }
+    }    
     
     deleteSelectedTasks() {
         const trashIcon = document.getElementById("trash-icon");
@@ -667,19 +723,6 @@ class ToDoList {
             }
         });
     }  
-    
-    filterAndSelectTasks(filterValue) {
-        const tasks = document.querySelectorAll(".task-checkbox");
-        tasks.forEach(task => {
-            const parentTaskDiv = task.closest(".p-task");
-            const taskStatus = parentTaskDiv.querySelector(".task").textContent;
-            if (taskStatus.includes(filterValue)) {
-                task.checked = true;
-            } else {
-                task.checked = false;
-            }
-        });
-    }
     
     reloadWeb() {
         const refreshIcon = document.getElementById("refresh-icon");

@@ -39,7 +39,7 @@
                 <div id="quick-inputs-container">
                     <label for="importance-select-option" id="importance-label" class="label">Importance</label>
                     <select id="importance-select-option">
-                        <option value="High">High</option>
+                        <option value="High" selected>High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
                     </select>
@@ -47,7 +47,7 @@
                     <select id="status-select-option">
                         <option value="Done">Done</option>
                         <option value="In Progress">In Progress</option>
-                        <option value="Not Done" selected>Not Done</option>
+                        <option value="Unfinished" selected>Unfinished</option>
                     </select>
                     <label for="finish-date">Finish Date: </label>
                     <input type="date" id="finish-date" title="Show calendar">
@@ -79,11 +79,11 @@
                         <ul class="dropdown-menu">
                             <li><button id="all-button" class="dropdown-item" data-value="all-tasks">All Tasks</button></li>
                             <li><button id="none-button" class="dropdown-item" data-value="none-tasks">None Tasks</button></li>
-                            <li><button id="done-button" class="dropdown-item" data-value="done">Done</button></li>
                             <li><button id="active-button" class="dropdown-item" data-value="active">Active</button></li>
                             <li><button id="expired-button" class="dropdown-item" data-value="expired">Expired</button></li>
+                            <li><button id="done-button" class="dropdown-item" data-value="done">Done</button></li>
                             <li><button id="in-progress-button" class="dropdown-item" data-value="in-progress">In Progress</button></li>
-                            <li><button id="not-done-button" class="dropdown-item" data-value="not-done">Not Done</button></li>
+                            <li><button id="unfinished-button" class="dropdown-item" data-value="unfinished">Unfinished</button></li>
                             <li><button id="hight-importance-button" class="dropdown-item" data-value="high-importance">Hight Importance</button></li>
                             <li><button id="medium-importance-button" class="dropdown-item" data-value="medium-importance">Medium Importance</button></li>
                             <li><button id="low-importance-button" class="dropdown-item" data-value="low-importance">Low Importance</button></li>
