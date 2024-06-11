@@ -20,7 +20,6 @@ function getOrdinalSuffix(number) {
 function updateLocalTime() {
     const localTimeElement = document.getElementById('time');
     const now = new Date();
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     
     const dayOfMonth = now.getDate();
@@ -64,7 +63,6 @@ class ToDoList {
         this.searchFormContainer = document.getElementById("search-form-container");
         this.sortedByButton = document.getElementById("sorted-by-button");
         this.totalSearchContainer = document.getElementById("total-search-results");
-        this.totalSearchResultNumber = document.getElementById("total-search-result-number");
         this.taskListResultsContainer = document.getElementById("task-list-results-container");
         this.statusOrder = ["Done", "In Progress", "Not Done"];
         this.importanceOrder = ["High", "Medium", "Low"];
@@ -88,6 +86,12 @@ class ToDoList {
         if (task.description) {
             descriptionButton += `<button class="show-description-button" title="Description">Show Description</button>`;
         }
+
+        const currentDate = new Date();
+        const finishDateTime = new Date(task.finishDate);
+        const isOverdue = currentDate > finishDateTime;
+    
+        const deadlineIcon = isOverdue ? '<i class="bi bi-hourglass-bottom" title="Overdue"></i>' : '';
     
         let taskId = `task-${index}`;
     
@@ -95,7 +99,13 @@ class ToDoList {
         <div class="tasksDiv">
             <div id="${taskId}" class="p-task">
                 <div class="task-info">
-                    <p class="task" title="${capitalizedTaskName}"><input type="checkbox" class="task-checkbox" title="Select task"></input>${index + 1}) ${capitalizedTaskName} | ${formattedDate} | <span style="color: ${importanceColor};">${task.importance}</span> | <span style="color: ${statusColor};">${task.status}</span> | Finish Date: ${formattedFinishDate}</p>
+                    <p class="task" title="${capitalizedTaskName}">
+                        <input type="checkbox" class="task-checkbox" title="Select task"></input>
+                        ${index + 1}) ${capitalizedTaskName} | ${formattedDate} | 
+                        <span style="color: ${importanceColor};">${task.importance}</span> | 
+                        <span style="color: ${statusColor};">${task.status}</span> | Finish Date: ${formattedFinishDate} 
+                        &nbsp ${deadlineIcon}
+                    </p>
                     <div class="description-container">${descriptionButton}</div>
                 </div>
             </div>
@@ -105,9 +115,11 @@ class ToDoList {
             </div>
             <br>
         </div>
-        `;
+    `;
     
-        let pTaskElement = tasksDiv.querySelector(`#${taskId}`);
+        const pTaskElement = tasksDiv.querySelector(`#${taskId}`);
+        const deleteButton = tasksDiv.querySelector(".delete-button");
+        const editButton = tasksDiv.querySelector(".edit-button");
     
         if (task.description) {
             const showDescriptionButton = tasksDiv.querySelector(".show-description-button");
@@ -115,9 +127,113 @@ class ToDoList {
                 this.showTaskDescription(task.description, pTaskElement); 
             });
         }
+
+        editButton.addEventListener("click", ()=> {
+            console.log("Edit Button clicked!");
+            this.createEditForm(task, index, tasksDiv);
+        });
+
+
+        deleteButton.addEventListener("click", (event) => {
+            const taskIndex = event.target.classList[0];
+            this.deleteTask(taskIndex);
+            Toastify({
+                text: `${task.name.charAt(0).toUpperCase() + task.name.slice(1)} has been deleted from the tasks list`,
+                className: "info",
+                style: {
+                    background: "tomato",
+                    borderRadius: "4px"
+                }
+            }).showToast();
+        });
+        
         return tasksDiv;
     }
     
+    createEditForm(task, index, tasksDiv) {
+        const existingEditForm = document.querySelector('.edit-form');
+        if (existingEditForm) {
+            existingEditForm.remove();
+        }
+        
+
+        const editFormDiv = document.createElement('div');
+        editFormDiv.classList.add('edit-form');
+
+        editFormDiv.innerHTML = `
+            <form id="edit-task-form">
+                <div id="task-name-edit-container">
+                    <label for="edit-task-name">Task Name:</label>
+                    <input type="text" id="edit-task-name" value="${task.name}" placeholder="Rename the task" required>
+                </div>
+                <div id="quick-inputs-edit-container">
+                    <label for="edit-task-importance">Importance:</label>
+                    <select id="edit-task-importance" required>
+                        <option value="High" ${task.importance === "High" ? "selected" : ""}>High</option>
+                        <option value="Medium" ${task.importance === "Medium" ? "selected" : ""}>Medium</option>
+                        <option value="Low" ${task.importance === "Low" ? "selected" : ""}>Low</option>
+                    </select>
+                    <label for="edit-task-status">Status:</label>
+                    <select id="edit-task-status" required>
+                        <option value="Done" ${task.status === "Done" ? "selected" : ""}>Done</option>
+                        <option value="In Progress" ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
+                        <option value="Not Done" ${task.status === "Not Done" ? "selected" : ""}>Not Done</option>
+                    </select>
+                    <label for="edit-task-finish-date">Finish Date:</label>
+                    <input type="date" id="edit-task-finish-date" value="${task.finishDate.split('T')[0]}" required>
+                </div>
+                <div id="task-description-edit-container">
+                    <label for="edit-task-description">Description <span class="edit-task-description">(optional)</span>:</label>
+                    <textarea id="edit-task-description" maxlength="1000" placeholder="Enter a description for your task...">${task.description}</textarea>
+                </div>
+                <div id="buttons-edit-box">
+                    <button type="submit" id="save-edit-button"> <i class="bi bi-check"></i> Save</button>
+                    <button type="button" id="cancel-edit-button"> <i class="bi bi-x"></i> Cancel</button>
+                <div>
+            </form>
+        `;
+
+        tasksDiv.appendChild(editFormDiv);
+
+        const editForm = editFormDiv.querySelector("#edit-task-form");
+        const cancelEditButton = editFormDiv.querySelector("#cancel-edit-button");
+
+        editForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            this.saveEditTask(task, index, editFormDiv);
+        });
+
+        cancelEditButton.addEventListener("click", () => {
+            editFormDiv.remove();
+        });
+    }
+
+    saveEditTask(task, index, editFormDiv) {
+        const editTaskName = editFormDiv.querySelector("#edit-task-name").value;
+        const editTaskImportance = editFormDiv.querySelector("#edit-task-importance").value;
+        const editTaskStatus = editFormDiv.querySelector("#edit-task-status").value;
+        const editTaskFinishDate = editFormDiv.querySelector("#edit-task-finish-date").value;
+        const editTaskDescription = editFormDiv.querySelector("#edit-task-description").value;
+
+        task.name = editTaskName;
+        task.importance = editTaskImportance;
+        task.status = editTaskStatus;
+        task.finishDate = editTaskFinishDate;
+        task.description = editTaskDescription;
+
+        this.taskList[index] = task;
+        localStorage.setItem('taskList', JSON.stringify(this.taskList));
+        this.displayTasksHandler();
+        Toastify({
+            text: `${task.name.charAt(0).toUpperCase() + task.name.slice(1)} has been updated successfully!`,
+            className: "info",
+            style: {
+                background: "#0FC616",
+                borderRadius: "4px"
+            }
+        }).showToast();
+    }
+
     showTaskDescription(description, pTaskElement) {
         if (pTaskElement) {
             if (!pTaskElement.querySelector('.task-description')) {
@@ -152,21 +268,6 @@ class ToDoList {
             let tasksDiv = this.createTaskElement(task, index);
     
             this.taskListResultsContainer.appendChild(tasksDiv);
-            
-            const deleteButton = tasksDiv.querySelector(".delete-button");
-    
-            deleteButton.addEventListener("click", (event) => {
-                const taskIndex = event.target.classList[0];
-                this.deleteTask(taskIndex);
-                Toastify({
-                    text: `${task.name.charAt(0).toUpperCase() + task.name.slice(1)} has been deleted from the tasks list`,
-                    className: "info",
-                    style: {
-                        background: "tomato",
-                        borderRadius: "4px"
-                    }
-                }).showToast();
-            });
         });
     }
     
@@ -447,6 +548,15 @@ class ToDoList {
         
         this.taskListResultsContainer.innerHTML = "";
         this.taskListResultsContainer.appendChild(notFoundMessage);
+        Toastify({
+            text: "No results found.",
+            className: "info",
+            style: {
+                background: "tomato",
+                borderRadius: "4px"
+            }
+        }).showToast();
+
         this.sortedByButton.style.display = "none";
         this.taskCounter.style.display = "none";
 
@@ -571,7 +681,6 @@ class ToDoList {
         });
     }
     
-
     reloadWeb() {
         const refreshIcon = document.getElementById("refresh-icon");
     
@@ -609,34 +718,17 @@ class ToDoList {
         return `${day}${daySuffix} ${month}, ${year}`;
     }
 
-    textareaCharacterCountdown = () => {
+    textareaCharacterCountdown() {
         const taskDescriptionTextarea = document.getElementById("task-description-textarea");
         const numberCountdown = document.getElementById("number-countdown");
-    
-        const maxLength = 1000;
-    
-        const updateCounter = () => {
-            const remainingChars = maxLength - taskDescriptionTextarea.value.length;
-            numberCountdown.textContent = `${remainingChars}/${maxLength}`;
-            numberCountdown.style.color = remainingChars === 0 ? "tomato" : "#555";
-        };
-    
-        updateCounter();
-    
-        taskDescriptionTextarea.addEventListener("input", updateCounter);
-    };
 
-    toastifyNotifications = (message, backgroundColor) => {
-        Toastify({
-            text: message,
-            className: "info",
-            style: {
-                background: backgroundColor,
-                borderRadius: "4px"
-            }
-        }).showToast();
+        if (taskDescriptionTextarea && numberCountdown) {
+            taskDescriptionTextarea.addEventListener("input", () => {
+                const remainingCharacters = 1000 - taskDescriptionTextarea.value.length;
+                numberCountdown.textContent = `${remainingCharacters}/1000`;
+            });
+        }
     }
-    
 }
 
 // Instances
@@ -653,8 +745,3 @@ toDoList.resetTaskForm();
 toDoList.reloadWeb();
 toDoList.selectAllTasks();
 
-
-
-
-// Add Toastify and SweetAlert Js Libraries!!!
-// Include SendGrid for mails.

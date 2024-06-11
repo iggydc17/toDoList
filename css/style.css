@@ -174,14 +174,12 @@ button {
         width: 97.3%;
         max-width: 97.3%;
         height: 120px;
-        max-height: 120px;
+        max-height: 377px;
+        min-height: 120px;
         border: 1px solid lightgray;
         border-radius: 6px;
         overflow: hidden;
-        padding-left: 12px;
-        padding-right: 12px;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding: 18px 24px;
         margin-top: 12px;
 
         &:focus {
@@ -395,7 +393,7 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 90%;
     background-color: white;
     border-bottom: 1px solid lightgray;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
     border-radius: 6px 6px 0px 0px;
     margin: 12px;
     padding: 8px;
@@ -498,7 +496,6 @@ input[type="search"]::-webkit-search-cancel-button {
     line-height: 32px;
     border-radius: 6px;
     padding: 28px;
-    margin-top: 32px;
 }
 
 /*Failed Search Results*/
@@ -543,6 +540,7 @@ input[type="search"]::-webkit-search-cancel-button {
     position: relative; 
     width: 52rem;
     overflow: hidden;
+    font-size: 17px;
     border-bottom: 1px solid #d3d3d3;
     background-color: #F2F6FC; 
     border-radius: 6px;
@@ -664,6 +662,129 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 }
 
+/*Edit Form*/
+#edit-task-form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+
+    font-size: 1em;
+    background-color: hsla(32, 100%, 71%, 0.637);
+    color: black;
+    border: 1px solid darkorange;
+    box-shadow: 0 4px 8px rgba(255, 165, 0, 0.5);
+    padding: 26px 56px;
+
+    & input,
+    select,
+    textarea {
+        border: 1px solid darkorange;
+        border-radius: 6px;
+        margin-left: 8px;
+        padding-left: 12px;
+    
+        &:focus {
+            outline: none !important;
+                border: 2px solid darkorange;
+                box-shadow: 0 0 1px darkorange;
+        }
+    }
+}
+
+#task-name-edit-container,
+#quick-inputs-edit-container,
+#task-description-edit-container,
+#buttons-edit-box {
+    width: 100%;
+    padding: 8px;
+    margin: 8px;
+    overflow: hidden;
+}
+
+#task-name-edit-container input {
+    width: 86%;
+    height: 38px;
+}
+
+#quick-inputs-edit-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    & select,
+    input {
+        height: 38px;
+        margin-right: 7px;
+    }
+}
+
+#task-description-edit-container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: start;
+    align-items: flex-start;
+
+    & #edit-task-description {
+        width: 98%;
+        max-width: 98%;
+        height: 80px;
+        max-height: 377px;
+        min-height: 100px;
+        padding: 18px 24px;
+        margin: 8px;
+        margin-left: 0px;
+        margin-top: 16px;
+        overflow: hidden;
+    }
+
+    & .edit-task-description {
+        color: #585858;
+    }
+}
+
+#buttons-edit-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 32px;
+
+    & button {
+        width: 140px;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    & #save-edit-button {
+        background-color: hsl(123, 95%, 31%);
+
+        &:hover {
+            background-color: hsl(123, 95%, 21%);
+        }
+
+        &:active {
+            background-color: hsl(123, 95%, 41%);
+        }
+    }
+
+    & #cancel-edit-button {
+        background-color: hsl(0, 96%, 56%);
+
+        &:hover {
+            background-color: hsl(0, 96%, 46%);
+        }
+
+        &:active {
+            background-color: hsl(0, 96%, 66%);
+        }
+    }
+}
+
 /*Footer*/
 footer {
     position: flex;
@@ -759,5 +880,9 @@ footer {
             text-decoration: underline;
         }
     }
+}
+
+.bi-hourglass-bottom {
+    color: sandybrown;
 }
 
