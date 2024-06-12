@@ -84,7 +84,7 @@ class ToDoList {
         let descriptionButton = '';
     
         if (task.description) {
-            descriptionButton += `<button class="show-description-button" title="Description">Show Description</button>`;
+            descriptionButton = `<button class="show-description-button" title="Description">Show Description</button>`;
         }
 
         const currentDate = new Date();
@@ -105,15 +105,16 @@ class ToDoList {
                         <span style="color: ${importanceColor};">${task.importance}</span> | 
                         <span style="color: ${statusColor};">${task.status}</span> | <br><span class="finish-date-span">Finish Date: ${formattedFinishDate}.</span> 
                         &nbsp ${deadlineIcon}
+                        <div class="description-container">
+                            ${descriptionButton}
+                        </div>
                     </p>
-                    <div class="description-container">${descriptionButton}</div>
                 </div>
             </div>
             <div class="button-container">
                 <button class="edit-button" type="submit" title="Edit"><i class="bi bi-pencil-square" title="Edit"></i> Edit</button>
                 <button class="${index} delete-button" type="submit" title="Delete"><i id="trash-icon" class="bi bi-trash" title="Delete"></i></button>
             </div>
-            <br>
         </div>
     `;
     

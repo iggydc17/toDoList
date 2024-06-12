@@ -1,2 +1,248 @@
 /*Medias Queries*/
 
+@media (max-width: 1210px) {
+
+    #finish-date {
+        width: 22%;
+    }
+}
+
+@media (max-width: 1164px) {
+    #quick-inputs-container {
+        padding-left: 8px;
+
+        & select {
+            padding-left: 2px;
+        }
+    }
+
+    #quick-inputs-container #importance-select-option {
+        width: 11%;
+    }
+
+    #quick-inputs-container #status-select-option {
+        width: 18%;
+    }
+}
+
+@media (max-width: 1125px) {
+    
+    #finish-date {
+        width: 22%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    #quick-inputs-container #importance-select-option,
+    #quick-inputs-container #status-select-option {
+        margin-right: -14px;
+        margin-left: -6px;
+    }
+
+    #quick-inputs-container #finish-date {
+        padding-left: 2px;
+        padding-right: 0px;
+    }
+
+    #complete-task-form {
+        padding: 0px 0px 12px 0px;
+    }
+
+    #finish-date {
+        margin-left: -8px;
+    }
+}
+
+@media (max-width: 1064px) {
+    #general-container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 975px) {
+    #general-container {
+        width: 84%;
+    }
+}
+
+@media (max-width: 927px) {
+
+    .tasksDiv .task {
+        border: 1px solid red;
+        min-width: 444px;
+    }
+}
+
+@media (max-width: 890px) {
+    #general-container {
+        width: 86%;
+    }
+}
+
+@media (max-width: 864px) {
+
+    #quick-inputs-container {
+        flex-flow: column wrap;
+        align-items: baseline;
+
+        & #task-name-container {
+            flex-flow: row;
+        }
+    }
+}
+
+@media (max-width: 818px) {
+
+    #task-name-container input {
+        width: 76%;
+    }
+
+    #task-description-container textarea {
+        width: 95%;
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 787px) {
+
+    #search-form-container {
+        width: 96%;
+    }
+}
+
+@media (max-width: 740px) {
+    #search-form-container input{
+        width: 80%;
+    }
+}
+
+@media (max-width: 692px) {
+
+    #task-name-container input {
+        width: 72%;
+    }
+}
+
+@media (max-width: 668px) {
+
+    #foot-container {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+
+        & #links {
+            padding: 16px 16px 8px 16px;
+        }
+    }
+}
+
+@media (max-width: 614px) {
+
+    #task-name-container input {
+        width: 68%;
+    }
+
+    #search-form-container input {
+        padding-left: 12px;
+    }
+}
+
+@media (max-width: 548px) {
+    #search-form-container input {
+        font-size: 14px;
+        height: 38px;
+        padding-left: 12px;
+    }
+
+    #search-form-container #search-button {
+        height: 38px;
+    }
+;
+}
+
+@media (max-width: 524px) {
+    #header-container {
+        padding: 12px 32px;
+    }
+}
+
+@media (max-width: 496px) {
+
+    #search-form-container input {
+        font-size: 13px;
+    }
+    
+    #copy {
+        padding: 12px 32px;
+    }
+
+    #copy p{
+        display: block;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    #copy a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 404px) {
+    #header-container {
+        padding: 12px 24px;
+
+        & h2 {
+            font-size: 20px;
+        }
+
+        & #local-time {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 350px) {
+
+    #header-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tech-list li {
+        margin-right: 8px;
+    }
+
+    .tech-logo {
+        width: 20px;
+        height: auto;
+    }
+
+    #links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin-left: 14px;
+        padding: 20px;
+    
+        & .bi {
+            font-size: 22px;
+        }
+    }    
+    
+    #copy {
+        padding: 12px;
+    }
+
+    #copy p{
+        font-size: 11px;
+    }
+
+    #copy a {
+        font-size: 12px;
+    }
+}

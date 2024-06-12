@@ -37,20 +37,26 @@
                     <input type="text" id="add-task-input" placeholder="Add a new Task" maxlength="38">    
                 </div>
                 <div id="quick-inputs-container">
-                    <label for="importance-select-option" id="importance-label" class="label">Importance</label>
-                    <select id="importance-select-option">
-                        <option value="High" selected>High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                    </select>
-                    <label for="status-select-option" id="status-label" class="label">Status</label>
-                    <select id="status-select-option">
-                        <option value="Done">Done</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Unfinished" selected>Unfinished</option>
-                    </select>
-                    <label for="finish-date">Finish Date: </label>
-                    <input type="date" id="finish-date" title="Show calendar">
+                    <div>
+                        <label for="importance-select-option" id="importance-label" class="label">Importance</label>
+                        <select id="importance-select-option">
+                            <option value="High" selected>High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>    
+                    </div>
+                    <div>
+                        <label for="status-select-option" id="status-label" class="label">Status</label>
+                        <select id="status-select-option">
+                            <option value="Done">Done</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Unfinished" selected>Unfinished</option>
+                        </select>    
+                    </div>
+                    <div>
+                        <label for="finish-date">Finish Date </label>
+                        <input type="date" id="finish-date" title="Show calendar">    
+                    </div>
                 </div>
                 <div id="task-description-container">
                     <label for="task-description">Description<span class="optional"> (optional)</span>:</label>
@@ -64,7 +70,7 @@
             </form>
         
             <form id="search-form-container">
-                <input type="search" id="search-bar" placeholder="Search by task name, importance or status.">
+                <input type="search" id="search-bar" placeholder="Search by task name, importance or status">
                 <button type="submit" id="search-button" title="Search"><i class="bi bi-search"></i></button>
                 <div id="total-search-results">
                     <p id="total-search-result-number" style="display: none;"></p>
@@ -159,6 +165,7 @@
                     </ul>
                 </div>
             </div>
+        </div>
         <div id="copy">
             <p>Copyrighting &COPY; 2024 &nbsp; <a href="mailto:iggy.dc17@gmail.com" target="_blank">Ignacio Agustin González</a></p>
         </div>
