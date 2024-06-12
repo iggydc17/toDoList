@@ -61,8 +61,7 @@ button {
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
-
-    width: 76%;
+    width: 86%;
     border: 2px solid lightgray;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 6px;
@@ -71,26 +70,23 @@ button {
     overflow: hidden;
 }
 
-/*Add Tasks Form*/
 #complete-task-form {
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
-
     width: 90%;
     background-color: #F2F6FC;
     border: 1px solid lightgray;
     border-radius: 6px;
     overflow: hidden;
     padding: 12px;
+}
 
-    
-    & label{
-        font-weight: bold;
-        font-size: 18px;
-        color: #333;
-    }
+#complete-task-form label {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
 }
 
 #task-name-container,
@@ -109,41 +105,39 @@ button {
     border-radius: 6px;
     margin-left: 8px;
     padding-left: 12px;
+}
 
-    &:focus {
-        outline: none !important;
-            border: 2px solid rgb(121, 121, 121);
-            box-shadow: 0 0 1px rgb(58, 58, 58);
-    }
+#task-name-container input:focus {
+    outline: none !important;
+    border: 2px solid rgb(121, 121, 121);
+    box-shadow: 0 0 1px rgb(58, 58, 58);
 }
 
 #quick-inputs-container {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: space-between;
-
+    justify-content: flex-start;
     width: 90%;
     padding: 8px;
     margin: 8px;
-
-    & input,
-    & select {
-        height: 24px;
-        border: 1px solid lightgray;
-        border-radius: 4px;
-        padding-left: 8px;
-
-        &:focus {
-            outline: none !important;
-            border: 2px solid lightgray;
-            box-shadow: 0 0 2px lightgray;
-        }    
-    }
+    gap: 96px;
+    overflow: hidden;
 }
 
-#quick-inputs-container label {
-    margin-right: -9px;
+#quick-inputs-container input,
+#quick-inputs-container select {
+    height: 24px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding-left: 6px;
+}
+
+#quick-inputs-container input:focus,
+#quick-inputs-container select:focus {
+    outline: none !important;
+    border: 2px solid lightgray;
+    box-shadow: 0 0 2px lightgray;
 }
 
 #quick-inputs-container select,
@@ -161,36 +155,36 @@ button {
     flex-flow: column wrap;
     justify-content: start;
     align-items: flex-start;
+}
 
-    & .optional {
-        font-weight: lighter;
-        color: #585858;
-    }
+#task-description-container .optional {
+    font-weight: lighter;
+    color: #585858;
+}
 
-    & p {
-        text-align: right;
-        color: #555;
-        font-size: 14px;    
-    }
+#task-description-container p {
+    text-align: right;
+    color: #555;
+    font-size: 14px;
+}
 
-    & textarea {
-        width: 97.3%;
-        max-width: 97.3%;
-        height: 120px;
-        max-height: 377px;
-        min-height: 120px;
-        border: 1px solid lightgray;
-        border-radius: 6px;
-        overflow: hidden;
-        padding: 18px 24px;
-        margin-top: 12px;
+#task-description-container textarea {
+    width: 97.3%;
+    max-width: 97.3%;
+    height: 120px;
+    max-height: 377px;
+    min-height: 120px;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 18px 24px;
+    margin-top: 12px;
+}
 
-        &:focus {
-            outline: none !important;
-            border: 2px solid rgb(121, 121, 121);
-            box-shadow: 0 0 1px rgb(58, 58, 58);
-        }
-    }
+#task-description-container textarea:focus {
+    outline: none !important;
+    border: 2px solid rgb(121, 121, 121);
+    box-shadow: 0 0 1px rgb(58, 58, 58);
 }
 
 #number-countdown {
@@ -203,7 +197,6 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     gap: 32px;
 }
@@ -535,6 +528,8 @@ input[type="search"]::-webkit-search-cancel-button {
     overflow: hidden;
     margin-top: 12px;
     padding: 0px;
+    border-radius: 6px;
+    border: 1px solid lightgray;
 }
 
 .tasksDiv {
@@ -546,7 +541,7 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 100%;
     font-size: 17px;
     border-bottom: 1px solid #d3d3d3;
-    background-color: #F2F6FC; 
+    background-color: #F2F6FC;
     padding: 0px 8px 0px 0px;
     cursor: pointer;
     transition: transform 0.3s ease;

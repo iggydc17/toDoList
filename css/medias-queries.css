@@ -1,129 +1,155 @@
-/*Medias Queries*/
-
-@media (max-width: 1210px) {
-
-    #finish-date {
-        width: 22%;
-    }
-}
-
-@media (max-width: 1164px) {
+@media (max-width: 1312px) {
     #quick-inputs-container {
-        padding-left: 8px;
-
-        & select {
-            padding-left: 2px;
-        }
-    }
-
-    #quick-inputs-container #importance-select-option {
-        width: 11%;
-    }
-
-    #quick-inputs-container #status-select-option {
-        width: 18%;
+        gap: 50px;
     }
 }
 
-@media (max-width: 1125px) {
-    
-    #finish-date {
-        width: 22%;
-        padding-left: 0px;
-        padding-right: 0px;
+@media (max-width: 1100px) {
+    #quick-inputs-container {
+        gap: 24px;
     }
+}
 
-    #quick-inputs-container #importance-select-option,
-    #quick-inputs-container #status-select-option {
-        margin-right: -14px;
-        margin-left: -6px;
-    }
-
-    #quick-inputs-container #finish-date {
-        padding-left: 2px;
-        padding-right: 0px;
-    }
-
-    #complete-task-form {
-        padding: 0px 0px 12px 0px;
+@media (max-width: 1024px) {
+    #quick-inputs-container {
+        gap: 10px;
     }
 
     #finish-date {
-        margin-left: -8px;
+        width: 52%;
+    }
+
+    #importance-select-option {
+        width: 34%;
+    }
+
+    #select-status-box {
+        margin-left: -24px;
+    }
+    #select-finish-date-box {
+        width: 41%;
     }
 }
 
-@media (max-width: 1064px) {
-    #general-container {
-        width: 80%;
-    }
-}
-
-@media (max-width: 975px) {
-    #general-container {
-        width: 84%;
-    }
-}
-
-@media (max-width: 927px) {
-
-    .tasksDiv .task {
-        border: 1px solid red;
-        min-width: 444px;
-    }
-}
-
-@media (max-width: 890px) {
-    #general-container {
-        width: 86%;
-    }
-}
-
-@media (max-width: 864px) {
-
+@media (max-width: 940px) {
     #quick-inputs-container {
         flex-flow: column wrap;
         align-items: baseline;
+        padding: 8px;
+        margin: 8px;
+        gap: 24px;        
 
-        & #task-name-container {
-            flex-flow: row;
+        & label {
+            margin-right: 12px;
+            }
         }
+
+    #select-importance-box,
+    #select-status-box,
+    #select-finish-date-box {
+        width: 100%;
+    }
+
+    #importance-select-option {
+        width: 27%;
+        padding-left: 8px;
+    }
+
+    #status-select-option {
+        width: 34%;
+        padding-left: 8px;
+    }
+
+    #finish-date {
+        width: 27%;
+        padding-left: 8px;
     }
 }
 
-@media (max-width: 818px) {
+@media (max-width: 895px) {
+    .button-container button {
+        padding: 6px 10px;
+    }
+}
 
+@media (max-width: 875px) {
     #task-name-container input {
         width: 76%;
     }
 
-    #task-description-container textarea {
-        width: 95%;
-        max-width: 95%;
+    .tasksDiv {
+        flex-flow: column wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
+        
+        & .task {
+            text-align: center;
+        }
+    }
+
+    .button-container {
+        margin-bottom: 8px;
+    }
+
+    .finish-date-span {
+        margin-left: 0px;
     }
 }
 
 @media (max-width: 787px) {
-
     #search-form-container {
+        width: 96%;
+    }
+
+    #complete-task-form label {
+        font-size: 17px;
+    }
+
+    #task-name-container input {
+        height: 38px;
+        font-size: 16px;
+    }
+
+    #general-container {
         width: 96%;
     }
 }
 
 @media (max-width: 740px) {
     #search-form-container input{
-        width: 80%;
-    }
-}
-
-@media (max-width: 692px) {
-
-    #task-name-container input {
         width: 72%;
     }
+
+    #clear-all-button,
+    #reset-button,
+    #add-button {
+        padding: 6px 10px;
+    }
 }
 
-@media (max-width: 668px) {
+@media (max-width: 678px) {
+    #general-container {
+        width: 100%;
+        border: none;
+        box-shadow: none;
+    }
+
+    #complete-task-form {
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    #finish-date {
+        min-width: 132px;
+    }
+
+    #importance-select-option {
+        min-width: 111px;
+    }
+
+    #status-select-option {
+        min-width: 120px;
+    }
 
     #foot-container {
         display: flex;
@@ -137,14 +163,20 @@
     }
 }
 
-@media (max-width: 614px) {
-
+@media (max-width: 615px) {
     #task-name-container input {
         width: 68%;
     }
 
     #search-form-container input {
         padding-left: 12px;
+    }
+}
+
+@media (max-width: 580px) {
+    .tasksDiv .task {
+        min-width: 300px;
+        max-width: none;
     }
 }
 
@@ -158,7 +190,6 @@
     #search-form-container #search-button {
         height: 38px;
     }
-;
 }
 
 @media (max-width: 524px) {
@@ -167,12 +198,11 @@
     }
 }
 
-@media (max-width: 496px) {
-
+@media (max-width: 496px) { 
     #search-form-container input {
         font-size: 13px;
     }
-    
+
     #copy {
         padding: 12px 32px;
     }
@@ -185,6 +215,25 @@
 
     #copy a {
         font-size: 14px;
+    }
+
+    #clear-all-button,
+    #reset-button,
+    #add-button {
+        padding: 4px 6px;
+    }
+}
+
+@media (max-width: 470px) {
+    #task-name-container label{
+        display: block;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    #task-name-container input {
+        width: 100%;
+        margin: 0;
     }
 }
 
@@ -200,16 +249,80 @@
             font-size: 14px;
         }
     }
+
+    #clear-all-button,
+    #reset-button,
+    #add-button {
+        padding: 2px 4px;
+    }
+
+    #task-name-container input {
+        height: 34px;
+    }
+
+    #complete-task-form label,
+    #complete-task-form input,
+    #clear-all-button,
+    #reset-button,
+    #add-button {
+        font-size: 15px;
+    }
+
+    #sorted-by-and-task-counter {
+        font-size: 16px;
+    }
+
+    .tasksDiv .task {
+        min-width: 260px;
+    }
 }
 
 @media (max-width: 350px) {
-
     #header-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
+    #complete-task-form label {
+        display: block;
+        margin-bottom: 8px;
+        text-align: left;
+    }
+
+    #complete-task-form div {
+        margin: 0px;
+    }
+
+    #task-description-container textarea{
+        margin-top: 0;
+    }
+
+    #number-countdown {
+        margin: 4px;
+    }
+
+    #task-counter-and-clear-all-container {
+        margin: 0;
+
+        & #general-checkbox-container .bi {
+            font-size: 16px;
+        }
+    }
+
+    #general-checkbox {
+        scale: 1;
+    }
+
+    .bi-arrow-clockwise {
+        margin: 0;
+    }
+
+    .tasksDiv .task {
+        min-width: 210px;
+    }
+
 
     .tech-list li {
         margin-right: 8px;
@@ -246,3 +359,4 @@
         font-size: 12px;
     }
 }
+
