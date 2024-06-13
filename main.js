@@ -456,7 +456,8 @@ class ToDoList {
             const searchResult = this.taskList.filter(task =>
                 task.name.toLowerCase().includes(searchBar) ||
                 task.importance.toLowerCase().includes(searchBar) ||
-                task.status.toLowerCase().includes(searchBar)
+                task.status.toLowerCase().includes(searchBar) ||
+                task.description.toLowerCase().includes(searchBar)
             );
     
             if (searchResult.length > 0) {
