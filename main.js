@@ -768,14 +768,20 @@ class ToDoList {
         return `${day}${daySuffix} ${month}, ${year}`;
     }
 
-    textareaCharacterCountdown() {
+        textareaCharacterCountdown() {
         const taskDescriptionTextarea = document.getElementById("task-description-textarea");
         const numberCountdown = document.getElementById("number-countdown");
-
+    
         if (taskDescriptionTextarea && numberCountdown) {
             taskDescriptionTextarea.addEventListener("input", () => {
                 const remainingCharacters = 1000 - taskDescriptionTextarea.value.length;
                 numberCountdown.textContent = `${remainingCharacters}/1000`;
+    
+                if (remainingCharacters === 0) {
+                    numberCountdown.style.color = "tomato";
+                } else {
+                    numberCountdown.style.color = "";
+                }
             });
         }
     }
