@@ -285,14 +285,47 @@ class ToDoList {
             let importanceSelectOption = document.getElementById("importance-select-option").value;
             let statusSelectOption = document.getElementById("status-select-option").value;
             let taskDescriptionTextarea = document.getElementById("task-description-textarea").value;
-            let finishDate = document.getElementById("finish-date").value;
+            let finishDateInput = document.getElementById("finish-date");
+            let finishDate = finishDateInput.value;
             let date = new Date(); 
     
-            if (addTaskInput && importanceSelectOption && statusSelectOption && finishDate) {
+            let isValid = true;
+            
+            document.getElementById("add-task-input").style.border = "";
+            finishDateInput.style.border = "";
+    
+            if (!addTaskInput) {
+                document.getElementById("add-task-input").style.border = "1px solid tomato";
+                isValid = false;
+            }
+            
+            if (!finishDate) {
+                finishDateInput.style.border = "1px solid tomato";
+                isValid = false;
+            } else {
+                let selectedDate = new Date(finishDate);
+                let today = new Date();
+                today.setHours(0, 0, 0, 0);
+    
+                if (selectedDate < today) {
+                    finishDateInput.style.border = "1px solid tomato";
+                    isValid = false;
+                    Toastify({
+                        text: "The finish date cannot be in the past!",
+                        className: "info",
+                        style: {
+                            background: "tomato",
+                            borderRadius: "4px"
+                        }
+                    }).showToast();
+                }
+            }
+    
+            if (isValid) {
                 let newTask = new Task(addTaskInput, importanceSelectOption, statusSelectOption, date, finishDate, taskDescriptionTextarea);
-                
                 this.addTask(newTask);
                 this.completeTaskForm.reset();
+    
                 Toastify({
                     text: `${addTaskInput.charAt(0).toUpperCase() + addTaskInput.slice(1)} has been added successfully to the tasks list!`,
                     className: "info",
@@ -302,7 +335,7 @@ class ToDoList {
                     }
                 }).showToast();
             } 
-            else {
+            else if (!finishDate) {
                 Toastify({
                     text: "The form must be filled!",
                     className: "info",
@@ -313,6 +346,11 @@ class ToDoList {
                 }).showToast();
             }
         });
+    
+        // Set min attribute for finish date input to prevent past dates
+        const finishDateInput = document.getElementById("finish-date");
+        const today = new Date().toISOString().split('T')[0];
+        finishDateInput.setAttribute('min', today);
     }
 
     displayTasksHandler() {
