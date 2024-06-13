@@ -163,27 +163,33 @@ class ToDoList {
         editFormDiv.innerHTML = `
             <form id="edit-task-form">
                 <div id="task-name-edit-container">
-                    <label for="edit-task-name">Task Name:</label>
+                    <label for="edit-task-name">Task Name</label>
                     <input type="text" id="edit-task-name" value="${task.name}" placeholder="Rename the task" required>
                 </div>
                 <div id="quick-inputs-edit-container">
-                    <label for="edit-task-importance">Importance:</label>
-                    <select id="edit-task-importance" required>
-                        <option value="High" ${task.importance === "High" ? "selected" : ""}>High</option>
-                        <option value="Medium" ${task.importance === "Medium" ? "selected" : ""}>Medium</option>
-                        <option value="Low" ${task.importance === "Low" ? "selected" : ""}>Low</option>
-                    </select>
-                    <label for="edit-task-status">Status:</label>
-                    <select id="edit-task-status" required>
-                        <option value="Done" ${task.status === "Done" ? "selected" : ""}>Done</option>
-                        <option value="In Progress" ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
-                        <option value="Unfinished" ${task.status === "Unfinished" ? "selected" : ""}>Unfinished</option>
-                    </select>
-                    <label for="edit-task-finish-date">Finish Date:</label>
-                    <input type="date" id="edit-task-finish-date" value="${task.finishDate.split('T')[0]}" required>
+                    <div id="select-importance-edit-box">
+                        <label for="edit-task-importance">Importance</label>
+                        <select id="edit-task-importance" required>
+                            <option value="High" ${task.importance === "High" ? "selected" : ""}>High</option>
+                            <option value="Medium" ${task.importance === "Medium" ? "selected" : ""}>Medium</option>
+                            <option value="Low" ${task.importance === "Low" ? "selected" : ""}>Low</option>
+                        </select>
+                    </div>
+                    <div id="select-status-edit-box">
+                        <label for="edit-task-status">Status</label>
+                        <select id="edit-task-status" required>
+                            <option value="Done" ${task.status === "Done" ? "selected" : ""}>Done</option>
+                            <option value="In Progress" ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
+                            <option value="Unfinished" ${task.status === "Unfinished" ? "selected" : ""}>Unfinished</option>
+                        </select>
+                    </div>
+                    <div id="select-finish-date-edit-box">
+                        <label for="edit-task-finish-date">Finish Date</label>
+                        <input type="date" id="edit-task-finish-date" value="${task.finishDate.split('T')[0]}" required>
+                    </div>
                 </div>
                 <div id="task-description-edit-container">
-                    <label for="edit-task-description">Description <span class="edit-task-description">(optional)</span>:</label>
+                    <label for="edit-task-description">Description <span class="edit-task-description">(optional)</span></label>
                     <textarea id="edit-task-description" maxlength="1000" placeholder="Enter a description for your task...">${task.description}</textarea>
                 </div>
                 <div id="buttons-edit-box">

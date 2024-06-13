@@ -4,6 +4,30 @@
     }
 }
 
+@media (max-width: 1122px) {
+    #edit-task-finish-date {
+        width: 54%;
+        padding-right: 4px;
+    }
+
+    #edit-task-importance {
+        width: 34%;
+    }
+
+    #quick-inputs-edit-container label{
+        margin-right: -10px;
+    }
+
+    #quick-inputs-container select {
+        padding-left: 4px;
+    }
+
+    #select-status-edit-box {
+        margin-left: -36px;
+        margin-right: -12px;
+    }
+}
+
 @media (max-width: 1100px) {
     #quick-inputs-container {
         gap: 24px;
@@ -26,8 +50,51 @@
     #select-status-box {
         margin-left: -24px;
     }
+
     #select-finish-date-box {
         width: 41%;
+    }
+}
+
+@media (max-width: 988px) {
+    #quick-inputs-edit-container {
+        flex-flow: column wrap;
+        align-items: baseline;
+        padding: 8px;
+
+        & label {
+            margin-right: 12px;
+        }
+
+        & select,
+        input {
+            margin: 24px 0px;
+        }
+    }
+
+    #edit-task-importance {
+        width: 43%;
+    }
+
+    #edit-task-status {
+        width: 50%;
+    }
+
+    #edit-task-finish-date {
+        width: 44%;
+    }
+
+
+    #select-importance-edit-box,
+    #select-status-edit-box,
+    #select-finish-date-edit-box {
+        width: 100%;
+        margin-top: -24px;
+    }
+
+    #task-description-edit-container,
+    #buttons-edit-box {
+        margin-top: -12px;
     }
 }
 
@@ -41,8 +108,8 @@
 
         & label {
             margin-right: 12px;
-            }
         }
+    }
 
     #select-importance-box,
     #select-status-box,
@@ -63,6 +130,10 @@
     #finish-date {
         width: 27%;
         padding-left: 8px;
+    }
+
+    #description-container {
+        min-width: 422px;
     }
 }
 
@@ -94,6 +165,41 @@
 
     .finish-date-span {
         margin-left: 0px;
+    }
+
+    .description-container {
+        text-align: center;
+
+        & button {
+            margin-left: 0;
+        }
+    }
+
+    #description-container {
+        min-width: 86%;
+        margin: 0 auto 8px;
+    }
+
+    #task-name-edit-container input{
+        width: 76%;
+    }
+
+    #buttons-edit-box {
+        gap: 12px;
+
+        & button {
+            width: 22%;
+        }
+    }
+}
+
+@media (max-width: 802px) {
+    #buttons-edit-box {
+        gap: 12px;
+
+        & button {
+            width: 25%;
+        }
     }
 }
 
@@ -161,6 +267,18 @@
             padding: 16px 16px 8px 16px;
         }
     }
+
+    #edit-task-form {
+        padding: 26px;
+    }
+
+    #task-name-edit-container input{
+        width: 66%;
+    }
+
+    #buttons-edit-box button {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 615px) {
@@ -196,6 +314,18 @@
     #header-container {
         padding: 12px 32px;
     }
+
+    #task-name-edit-container label {
+        display: block;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    #task-name-edit-container input {
+        width: 100%;
+        margin: 0px;
+        margin-bottom: -12px;
+    }
 }
 
 @media (max-width: 496px) { 
@@ -219,7 +349,9 @@
 
     #clear-all-button,
     #reset-button,
-    #add-button {
+    #add-button,
+    #save-edit-button,
+    #cancel-edit-button {
         padding: 4px 6px;
     }
 }
@@ -235,9 +367,13 @@
         width: 100%;
         margin: 0;
     }
+
+    #edit-task-finish-date {
+        min-width: 130px;
+    }
 }
 
-@media (max-width: 404px) {
+@media (max-width: 408px) {
     #header-container {
         padding: 12px 24px;
 
@@ -274,6 +410,40 @@
 
     .tasksDiv .task {
         min-width: 260px;
+    }
+
+    #buttons-edit-box .bi {
+        display: none;
+    }
+}
+
+
+@media (max-width: 385px) {
+    #edit-task-form {
+        & label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        #edit-task-description {
+            padding: 9px 12px;
+        }
+    }
+
+    #select-finish-date-edit-box,
+    #select-importance-edit-box,
+    #select-status-edit-box {
+        margin: 0;
+        padding: 0;
+
+        & select,
+        input {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 16px;
+            padding-left: 12px;
+        }
     }
 }
 
@@ -360,3 +530,9 @@
     }
 }
 
+@media (max-width: 326px) {
+    #buttons-edit-box button {
+        font-weight: normal;
+        font-size: 12px;
+    }
+}
